@@ -1,0 +1,10 @@
+@startuml
+scale 1
+actor "评测机" as j
+database "评测机缓存" as jb
+control "评测机控制端" as b
+alt Break
+j --x b : 链接断开
+hnote over b : 禁用密钥\n清理令牌\n重发相关任务
+end
+@enduml

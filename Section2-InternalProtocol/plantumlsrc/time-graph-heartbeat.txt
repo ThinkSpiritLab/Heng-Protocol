@@ -1,0 +1,10 @@
+@startuml
+scale 1
+actor "评测机" as j
+database "评测机缓存" as jb
+control "评测机控制端" as b
+loop HeartBeat
+j --> b : 报告状态
+hnote over b : 记录评测机状态\n并更新心跳计时
+end
+@enduml

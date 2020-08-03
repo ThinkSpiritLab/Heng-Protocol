@@ -1,0 +1,45 @@
+@startuml
+scale 1
+actor "评测机" as j
+database "评测机缓存" as jb
+control "评测机控制端" as b
+database "题目文件存储" as oss
+loop 评测循环
+hnote over b : 选取一个令牌
+j <-- b : 发送任务给令牌对应的评测机
+note right
+包含不可缓存内容和可缓存内容的URL
+比如用户代码，时空限制等不能或不必缓存的内容
+spj代码，题目输入输出等可缓存内容发送URL
+endnote
+hnote over b : 将令牌和任务放入\n活动任务队列
+j --\ b : 任务准备中
+activate j
+loop Query Cahce
+j --\ b : 任务正在查询缓存
+j --> jb : 查询缓存
+activate jb
+alt Cache Hit
+jb --> j : 返回数据
+end
+end
+deactivate jb
+alt Not Cached
+j --\ b : 任务正在下载数据
+j --\ oss : 请求缺失的数据
+activate oss
+oss --\ j : 返回数据
+deactivate oss
+alt Cache
+j --> jb : 写入缓存
+end
+end
+j --\ b : 任务正在等待评测
+hnote over j : 评测
+j --\ b : 任务正在评测
+hnote over j : 评测结束
+j --> b : 返回评测结果
+hnote over b : 回收任务\n生成令牌
+deactivate j
+end
+@enduml

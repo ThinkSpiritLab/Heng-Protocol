@@ -1,0 +1,19 @@
+@startuml
+boundary 评测控制端 as jb
+boundary "题目数据存储" as oss
+node "评测机" as judger {
+  agent 评测内核 as core
+  control 评测机内部调度 as ctrl
+  queue 评测队列 as que
+  database Redis缓存 as rd
+}
+jb --> que : 评测任务
+que --> ctrl : 评测任务
+jb --> ctrl : 评测数据或URL
+oss ----> ctrl : 评测数据
+ctrl <--> rd : 评测数据缓存
+ctrl --> core : 评测任务和数据
+core --> ctrl : 评测结果
+ctrl --> jb : 评测机状态
+ctrl --> jb : 评测结果
+@enduml

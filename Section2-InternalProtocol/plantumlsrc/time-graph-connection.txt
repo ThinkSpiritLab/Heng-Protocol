@@ -1,0 +1,27 @@
+@startuml
+scale 1
+actor "评测机" as j
+database "评测机缓存" as jb
+control "评测机控制端" as b
+hnote over b : 生成密钥\n填入 Judger 的配置
+group Auth
+j --> b : 建立ws
+b --> j : 发送认证询问
+hnote over j : 用密钥加密
+j --> b : 回应认证
+alt Fail
+b --x j : 断开ws
+alt RepeatAuth
+hnote over b : 断开被重复的Judger
+end
+else Success
+b --> j : 发凭证
+j --> b : 通报参数
+j --> b : 发令牌
+note right
+令牌的个数取决于评测机的能力
+是评测机的最大队列深度
+endnote
+end
+end
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+boundary "客户系统" as webbackend
+boundary "题目文件存储" as oss
+actor "状态观察用户" as statususer
+frame "评测系统" {
+  node "评测机" as judger
+  control "评测控制端" as judgerbackend
+}
+webbackend ---> judgerbackend : 评测指令
+statususer <-r-- judgerbackend : 评测系统运行状态
+judgerbackend --> judger : 发放评测指令
+judgerbackend --> judger : 发放文件URL\n(少数文件直接发放内容)
+judger --> oss : 访问文件
+judgerbackend --> webbackend : 返回评测结果
+judger --> judgerbackend : 返回评测结果
+judger --> judgerbackend : 返回评测机状态
+@enduml
