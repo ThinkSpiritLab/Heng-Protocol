@@ -1,16 +1,13 @@
-declare namespace Heng.InternalProtocol
-{
+declare namespace Heng.InternalProtocol {
     type ContextID = number | string;
     // type MessageID = number | string;
-    interface BasicMessage
-    {
+    interface BasicMessage {
         contextID: ContextID; // 消息的标识符
         type: MessageType; // 消息的种类
         body: unknown; // 消息携带的其它信息
     }
 
-    export enum MessageType
-    {
+    export enum MessageType {
         Ack = 1, // 对其它消息的确认
         // Version = 2, // 声明所支持的协议版本号
         // Verify = 3, // 身份认证消息
@@ -27,14 +24,12 @@ declare namespace Heng.InternalProtocol
         Error = 127, // 出错了
     }
     // ----------------------------------------------------------------
-    export interface AckMessage extends BasicMessage
-    {
+    export interface AckMessage extends BasicMessage {
         type: MessageType.Ack;
         body: undefined;
     }
 
-    export interface JudgerInfo
-    {
+    export interface JudgerInfo {
         timestamp: number;
         maxTaskCount: number;
         name?: string;
@@ -43,48 +38,41 @@ declare namespace Heng.InternalProtocol
         signature: string; //
     }
 
-    export interface JudgerInfoMessage extends BasicMessage
-    {
+    export interface JudgerInfoMessage extends BasicMessage {
         type: MessageType.JudgerInfo;
         body: JudgerInfo;
     }
     // ----------------------------------------------------------------
-    export interface StatusRequestPayload
-    {
+    export interface StatusRequestPayload {
         setReportInterval?: number;
         immediate: boolean;
     }
 
-    export interface StatusRequestMessage extends BasicMessage
-    {
+    export interface StatusRequestMessage extends BasicMessage {
         type: MessageType.StatusRequest;
         body: StatusRequestPayload;
     }
     // ----------------------------------------------------------------
-    export interface CpuUsage
-    {
+    export interface CpuUsage {
         percentage: number;
         recent?: {
             [minute: number]: number;
         };
     }
 
-    export interface MemoryUsage
-    {
+    export interface MemoryUsage {
         percentage: number;
         recent?: {
             [minute: number]: number;
         };
     }
 
-    export interface HardwareStatus
-    {
+    export interface HardwareStatus {
         cpu: CpuUsage;
         memory: MemoryUsage;
     }
 
-    export interface TaskStatus
-    {
+    export interface TaskStatus {
         preparing: {
             downloading: number;
             readingCache: number;
@@ -97,16 +85,14 @@ declare namespace Heng.InternalProtocol
 
     type TimeString = string;
 
-    export interface StatusReportPayload
-    {
+    export interface StatusReportPayload {
         time: TimeString;
         nextReportTime: TimeString;
         hardware: HardwareStatus;
         task: TaskStatus;
     }
 
-    export interface StatusReportMessage extends BasicMessage
-    {
+    export interface StatusReportMessage extends BasicMessage {
         type: MessageType.StatusReport;
         body: StatusReportPayload;
     }
@@ -115,28 +101,25 @@ declare namespace Heng.InternalProtocol
         id: string;
         hashsum?: string;
     } & (
-            | {
-                url: string;
-                authorization?: string;
-            }
-            | {
-                content: string;
-            }
-        );
+        | {
+              url: string;
+              authorization?: string;
+          }
+        | {
+              content: string;
+          }
+    );
 
-    export enum JudgeType
-    {
+    export enum JudgeType {
         Normal = "normal",
         Special = "special",
         Interactive = "interactive",
     }
-    export enum TestPolicy
-    {
+    export enum TestPolicy {
         Fuse = "fuse",
         All = "all",
     }
-    interface Limit
-    {
+    interface Limit {
         // 运行：内存、时间、输出
         // 编译: 内存、时间、输出(标准流、生成文件）
 
@@ -153,8 +136,7 @@ declare namespace Heng.InternalProtocol
         };
     }
 
-    interface Excuteable
-    {
+    interface Excuteable {
         source: File;
         environment: string; // how to compile or excute
         limit: Limit;
@@ -162,33 +144,32 @@ declare namespace Heng.InternalProtocol
 
     type DynamicFile =
         | {
-            type: "builtin";
-            name: string; // "user_source" "user_bin"
-        }
+              type: "builtin";
+              name: string; // "user_source" "user_bin"
+          }
         | {
-            type: "remote";
-            file: File;
-            name: string;
-        };
+              type: "remote";
+              file: File;
+              name: string;
+          };
 
     type Judge =
         | {
-            type: JudgeType.Normal;
-            user: Excuteable;
-        }
+              type: JudgeType.Normal;
+              user: Excuteable;
+          }
         | {
-            type: JudgeType.Special;
-            user: Excuteable;
-            spj: Excuteable;
-        }
+              type: JudgeType.Special;
+              user: Excuteable;
+              spj: Excuteable;
+          }
         | {
-            type: JudgeType.Interactive;
-            user: Excuteable;
-            interactor: Excuteable;
-        };
+              type: JudgeType.Interactive;
+              user: Excuteable;
+              interactor: Excuteable;
+          };
 
-    export interface JudgeRequest
-    {
+    export interface JudgeRequest {
         taskId: string;
 
         data?: File; // zip
@@ -206,14 +187,12 @@ declare namespace Heng.InternalProtocol
             policy: TestPolicy; // 全部/短路
         };
     }
-    export interface JudgeRequestMessage extends BasicMessage
-    {
+    export interface JudgeRequestMessage extends BasicMessage {
         type: MessageType.JudgeRequest;
         body: JudgeRequest;
     }
     // ----------------------------------------------------------------
-    export enum JudgeState
-    {
+    export enum JudgeState {
         ReadingCache = "readingCache",
         Downloading = "downloading",
         Pending = "pending",
@@ -221,20 +200,17 @@ declare namespace Heng.InternalProtocol
         Finished = "finished",
     }
 
-    export interface JudgeStatePayload
-    {
+    export interface JudgeStatePayload {
         taskId: string;
         state: JudgeState;
     }
 
-    export interface JudgeStateMessage extends BasicMessage
-    {
+    export interface JudgeStateMessage extends BasicMessage {
         type: MessageType.JudgeState;
         body: JudgeStatePayload;
     }
     // ----------------------------------------------------------------
-    export enum JudgeResultType
-    {
+    export enum JudgeResultType {
         Accepted = "Accepted",
         WrongAnswer = "WrongAnswer",
 
@@ -258,16 +234,14 @@ declare namespace Heng.InternalProtocol
         Unjudged = "Unjudged",
     }
 
-    export interface JudgeCaseResult
-    {
+    export interface JudgeCaseResult {
         result: JudgeResultType;
         time: number;
         memory: number;
         extraMessage?: string;
     }
 
-    export interface JudgeResult
-    {
+    export interface JudgeResult {
         taskId: string;
         cases: JudgeCaseResult[];
         extra?: {
@@ -283,33 +257,28 @@ declare namespace Heng.InternalProtocol
         };
     }
 
-    export interface JudgeResultMessage extends BasicMessage
-    {
+    export interface JudgeResultMessage extends BasicMessage {
         type: MessageType.JudgeResult;
         body: JudgeResult;
     }
     // ----------------------------------------------------------------
-    export interface ShutdownRequest
-    {
+    export interface ShutdownRequest {
         reboot: boolean;
         rebootDelay?: number;
         reason?: string;
     }
 
-    export interface ShutdownMessage extends BasicMessage
-    {
+    export interface ShutdownMessage extends BasicMessage {
         type: MessageType.Shutdown;
         body: ShutdownRequest;
     }
     // ----------------------------------------------------------------
-    export interface ErrorInfo
-    {
+    export interface ErrorInfo {
         code: number;
         message?: string;
     }
 
-    export interface ErrorMessage extends BasicMessage
-    {
+    export interface ErrorMessage extends BasicMessage {
         type: MessageType.Error;
         body: ErrorInfo;
     }
