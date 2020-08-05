@@ -1,7 +1,5 @@
-export declare namespace Heng.ExternalProtocol.v1.Http.Get
-{
-    export interface BasicHttpResponse<T>
-    {
+export declare namespace Heng.ExternalProtocol.v1.Http.Get {
+    export interface BasicHttpResponse<T> {
         statuscode: number;
         message?: string;
         body: T;
@@ -9,8 +7,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
     // ----------------------------------------------------------------
     export type JudgesResponse = BasicHttpResponse<string[]>;
     // ----------------------------------------------------------------
-    export enum JudgeStateEnum
-    {
+    export enum JudgeStateEnum {
         Waiting = "Waiting",
         Preparing = "Preparing",
         Pending = "Pending",
@@ -18,8 +15,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
         Judged = "Judged",
     }
 
-    export enum JudgeResultType
-    {
+    export enum JudgeResultType {
         Accepted = "Accepted",
         WrongAnswer = "WrongAnswer",
 
@@ -43,46 +39,40 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
         Unjudged = "Unjudged",
     }
 
-    export interface BriefJudgeCaseResult
-    {
+    export interface BriefJudgeCaseResult {
         result: JudgeResultType;
         time: number;
         memory: number;
     }
 
-    export interface BriefJudgeResult
-    {
+    export interface BriefJudgeResult {
         cases: BriefJudgeCaseResult[];
     }
 
-    export interface JudgeWaitingState
-    {
+    export interface JudgeWaitingState {
         judgeId: string;
-        state: JudgeStateEnum.Waiting
-        | JudgeStateEnum.Preparing
-        | JudgeStateEnum.Pending
-        | JudgeStateEnum.Judging;
+        state:
+            | JudgeStateEnum.Waiting
+            | JudgeStateEnum.Preparing
+            | JudgeStateEnum.Pending
+            | JudgeStateEnum.Judging;
     }
-    export interface JudgeFinishState
-    {
+    export interface JudgeFinishState {
         judgeId: string;
         state: JudgeStateEnum.Judged;
         result: BriefJudgeResult;
     }
-    export type JudgeState = JudgeWaitingState
-        | JudgeFinishState;
+    export type JudgeState = JudgeWaitingState | JudgeFinishState;
 
     export type JudgeStateResponse = BasicHttpResponse<JudgeState[]>;
     // -------------------------------------------------------------
-    export interface JudgeCaseResult
-    {
+    export interface JudgeCaseResult {
         result: JudgeResultType;
         time: number;
         memory: number;
         extraMessage?: string;
     }
-    export interface JudgeDetail
-    {
+    export interface JudgeDetail {
         judgeId: string;
         cases: JudgeCaseResult[];
         extra?: {
@@ -99,8 +89,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
     }
     export type JudgeDetailResponse = BasicHttpResponse<JudgeDetail>;
     // ----------------------------------------------------------------
-    export interface TaskStatus
-    {
+    export interface TaskStatus {
         preparing: {
             downloading: number;
             readingCache: number;
@@ -110,35 +99,30 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
         finished: number;
         total: number;
     }
-    export interface CpuUsage
-    {
+    export interface CpuUsage {
         percentage: number;
         recent?: {
             [minute: number]: number;
         };
     }
 
-    export interface MemoryUsage
-    {
+    export interface MemoryUsage {
         percentage: number;
         recent?: {
             [minute: number]: number;
         };
     }
 
-    export interface HardwareStatus
-    {
+    export interface HardwareStatus {
         cpu: CpuUsage;
         memory: MemoryUsage;
     }
-    export interface JudgerStatus
-    {
+    export interface JudgerStatus {
         name: string;
         hardware: HardwareStatus;
     }
 
-    export interface SystemStatus
-    {
+    export interface SystemStatus {
         tasks: TaskStatus;
         controller: HardwareStatus;
         judgers: JudgerStatus[];
@@ -148,7 +132,8 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Get
     // -------------------------------------------------------------
     export type ErrorResponse = BasicHttpResponse<undefined>;
 
-    export type HttpResponse = ErrorResponse
+    export type HttpResponse =
+        | ErrorResponse
         | JudgesResponse
         | JudgeStateResponse
         | JudgeDetailResponse

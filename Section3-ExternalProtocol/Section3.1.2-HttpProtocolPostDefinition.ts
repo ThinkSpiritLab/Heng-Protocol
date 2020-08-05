@@ -1,7 +1,5 @@
-export declare namespace Heng.ExternalProtocol.v1.Http.Post
-{
-    export interface BasicHttpRequest<T>
-    {
+export declare namespace Heng.ExternalProtocol.v1.Http.Post {
+    export interface BasicHttpRequest<T> {
         url: string;
         messageid: string;
         tiemstamp: string | number; // 64位时间好像超出上界，但是应该影响不大
@@ -9,8 +7,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
         ackey: string;
         signature: string;
     }
-    export interface BasicHttpResponse<T>
-    {
+    export interface BasicHttpResponse<T> {
         statuscode: number;
         message?: string;
         body: T;
@@ -20,28 +17,25 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
         id: string;
         hashsum?: string;
     } & (
-            | {
-                url: string;
-                authorization?: string;
-            }
-            | {
-                content: string;
-            }
-        );
+        | {
+              url: string;
+              authorization?: string;
+          }
+        | {
+              content: string;
+          }
+    );
 
-    export enum JudgeType
-    {
+    export enum JudgeType {
         Normal = "normal",
         Special = "special",
         Interactive = "interactive",
     }
-    export enum TestPolicy
-    {
+    export enum TestPolicy {
         Fuse = "fuse",
         All = "all",
     }
-    interface Limit
-    {
+    interface Limit {
         // 运行：内存、时间、输出
         // 编译: 内存、时间、输出(标准流、生成文件）
 
@@ -58,8 +52,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
         };
     }
 
-    interface Excuteable
-    {
+    interface Excuteable {
         source: File;
         environment: string; // how to compile or excute
         limit: Limit;
@@ -67,33 +60,32 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
 
     type DynamicFile =
         | {
-            type: "builtin";
-            name: string; // "user_source" "user_bin"
-        }
+              type: "builtin";
+              name: string; // "user_source" "user_bin"
+          }
         | {
-            type: "remote";
-            file: File;
-            name: string;
-        };
+              type: "remote";
+              file: File;
+              name: string;
+          };
 
     type Judge =
         | {
-            type: JudgeType.Normal;
-            user: Excuteable;
-        }
+              type: JudgeType.Normal;
+              user: Excuteable;
+          }
         | {
-            type: JudgeType.Special;
-            user: Excuteable;
-            spj: Excuteable;
-        }
+              type: JudgeType.Special;
+              user: Excuteable;
+              spj: Excuteable;
+          }
         | {
-            type: JudgeType.Interactive;
-            user: Excuteable;
-            interactor: Excuteable;
-        };
+              type: JudgeType.Interactive;
+              user: Excuteable;
+              interactor: Excuteable;
+          };
 
-    export interface JudgeRequest
-    {
+    export interface JudgeRequest {
         taskId: string;
 
         data?: File; // zip
@@ -111,8 +103,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
             policy: TestPolicy; // 全部/短路
         };
     }
-    export interface ExtendJudgeRequest
-    {
+    export interface ExtendJudgeRequest {
         taskId: string;
 
         data?: File; // zip
@@ -121,8 +112,7 @@ export declare namespace Heng.ExternalProtocol.v1.Http.Post
 
         judge: Judge;
     }
-    export interface CreateJudgePayload
-    {
+    export interface CreateJudgePayload {
         mainJudge: JudgeRequest;
         extra?: ExtendJudgeRequest[];
     }
