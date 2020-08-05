@@ -1,27 +1,27 @@
 declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
     // // ---------------------------------------------------
-    interface BasicMessage {
+    interface BasicResponse {
         // contextID: ContextID; // 消息的标识符
-        type: MessageType; // 消息的种类
+        type: ResponseType; // 消息的种类
         body: unknown; // 消息携带的其它信息
-        messageUUID: string;
+        nonce: string;
     }
 
-    export enum MessageType {
+    export enum ResponseType {
         Ack = 1, // 对其它消息的确认
         Authentication = 3, //认证消息
         Error = 127, // 出错了
     }
-    export interface AckMessage extends BasicMessage {
-        type: MessageType.Ack;
+    export interface AckResponse extends BasicResponse {
+        type: ResponseType.Ack;
         body: undefined;
     }
     // ----------------------------------------------------------------
     export interface AuthenticationPayload {
         JWTToken: string;
     }
-    export interface AuthenticationMessage extends BasicMessage {
-        type: MessageType.Authentication;
+    export interface AuthenticationResponse extends BasicResponse {
+        type: ResponseType.Authentication;
         body: AuthenticationPayload;
     }
     // --------------------------------------------------------------------
@@ -61,25 +61,26 @@ declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
 
     export interface JudgeCaseResult {
         result: JudgeResultType;
-        time: number;
-        memory: number;
+        time: number; // ms
+        memory: number; // kib
         extraMessage?: string;
     }
 
     export interface JudgeResult {
+        taskId: string;
         cases: JudgeCaseResult[];
         extra?: {
             user?: {
                 compileMessage?: string;
-                compiletime?: number;
+                compileTime?: number; // ms
             };
             spj?: {
                 compileMessage?: string;
-                compiletime?: number;
+                compileTime?: number; // ms
             };
             interactor?: {
                 compileMessage?: string;
-                compiletime?: number;
+                compileTime?: number; // ms
             };
         };
     }
@@ -89,10 +90,10 @@ declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
         message?: string;
     }
 
-    export interface ErrorMessage extends BasicMessage {
-        type: MessageType.Error;
+    export interface ErrorResponse extends BasicResponse {
+        type: ResponseType.Error;
         body: ErrorInfo;
     }
     // ----------------------------------------------------------------
-    export type HttpMessage = AckMessage | AuthenticationMessage | ErrorMessage;
+    export type HttpResponse = AckResponse | AuthenticationResponse | ErrorResponse;
 }

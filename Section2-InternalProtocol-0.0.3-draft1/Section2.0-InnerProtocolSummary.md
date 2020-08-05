@@ -247,13 +247,16 @@ URL： `/judgers/token`
 
 ### 评测状态更新
 
-URL： `/judge/status`
+URL： `/judges/${taskId}/status`
+
+| 参数名 | 值类型 | 说明 |
+| :-: | :-: | :-: |
+|`taskId`|`string`|计划更新状态的评测|
 
 方法: `PUT`
 
-| 参数名 | 值类型 | 必选？ | 说明 |
+| 请求体 | 值类型 | 必选？ | 说明 |
 | :-: | :-: | :-: | :-: |
-|`taskId`|`string|string[]`|`true`|计划更新状态的评测，多个用 `,` 分隔|
 |`state`|`JudgeState`|`true`|状态，允许的取值见 `JudgeState` 定义|
 
 成功状态下返回
@@ -266,14 +269,17 @@ URL： `/judge/status`
 
 ### 评测结果提交
 
-URL： `/judge/result`
+URL： `/judges/${taskId}/result`
+
+| 参数名 | 值类型 | 说明 |
+| :-: | :-: | :-: |
+|`taskId`|`string`|计划更新状态的评测|
 
 方法: `POST`
 
-| 参数名 | 值类型 | 必选？ | 说明 |
+| 请求体 | 值类型 | 必选？ | 说明 |
 | :-: | :-: | :-: | :-: |
-|`taskId`|`string`|`true`|计划提交的评测，多个用 `,` 分隔|
-|`result`|`JudgeResult`|`true`|结果，对结果取`JSON.stringify`后，用 `hex`编码|
+|`result`|`JudgeResult`|`true`|结果|
 
 成功状态下返回
 
