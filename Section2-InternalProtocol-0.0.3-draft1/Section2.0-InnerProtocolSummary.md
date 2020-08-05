@@ -91,7 +91,9 @@
 
 WebSocket 连接地址为 `/v1/judgers/websocket`
 
-需要在cookie中有有效的 `JWTToken`
+| 参数名 | 值类型 | 必选？ | 说明 |
+| :-: | :-: | :-: | :-: |
+| `token` | `string` | `true` | 从 `/judgers/token` 获取的token |
 
 ### 基本消息
 
