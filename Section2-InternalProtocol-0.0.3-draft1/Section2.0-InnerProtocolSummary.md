@@ -129,7 +129,7 @@ body 为 `JudgeRequest`
 
 body 为 `StatusReportPayload`
 
-其中注意 `TimeType` 指 UNIX 时间戳（UTC +00:00）
+其中注意 `TimeType` 指 RFC 3339 格式
 
 ### 状态报告控制消息
 
@@ -163,7 +163,7 @@ body 为 `ShutdownRequest`
 
 body 为 `DisconnectPayload`
 
-其中注意 `TimeType` 指 UNIX 时间戳（UTC +00:00）
+其中注意 `TimeType` 指 RFC 3339 格式
 
 ### 错误消息
 
@@ -207,10 +207,9 @@ POST 限制请求体大小为 `1MB`
 
     ```typescript
     let signature = crypto
-        .createHash("sha256")
-        .update(RequestString)
-        .update(SecrectKey)
-        .digest("hex");
+    .createHmac("sha256",SecrectKey)
+    .update(RequestString)
+    .digest('hex')
     ```
 
 4. 然后即可将 Signature 加入参数列表，完成计算。

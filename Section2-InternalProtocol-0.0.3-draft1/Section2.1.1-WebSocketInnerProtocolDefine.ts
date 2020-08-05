@@ -69,7 +69,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         Terminated = "terminated",
     }
 
-    type TimeType = number;
+    type TimeType = string;
 
     export interface StatusReportPayload {
         time: TimeType;
