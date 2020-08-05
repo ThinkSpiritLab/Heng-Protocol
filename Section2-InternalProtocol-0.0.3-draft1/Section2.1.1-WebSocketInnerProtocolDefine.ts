@@ -64,7 +64,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         Terminated = "terminated",
     }
 
-    type TimeType = string; //　RFC3339
+    type TimeType = string; //RFC3339
 
     export interface StatusReportPayload {
         time: TimeType;
