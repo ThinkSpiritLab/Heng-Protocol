@@ -1,0 +1,24 @@
+{
+    "name": "heng-protocol",
+    "version": "0.0.3",
+    "license": "MIT",
+    "private": true,
+    "contributors": [{
+        "name": "ThinkSpiritDevelopers"
+    }],
+    "dependencies": {
+        "typescript": "^3.9.7"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^3.7.0",
+        "@typescript-eslint/parser": "^3.7.0",
+        "eslint": "^7.5.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "prettier": "^2.0.5"
+    },
+    "scripts": {
+        "ci-eslint": "eslint --ext .ts,.js ./",
+        "ci-format": "prettier -c ./**.js ./**.ts"
+    }
+}
