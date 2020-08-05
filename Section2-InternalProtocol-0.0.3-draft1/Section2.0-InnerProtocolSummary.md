@@ -234,6 +234,7 @@ URL： `/judgers/token`
 | 参数名 | 值类型 | 必选？ | 说明 |
 | :-: | :-: | :-: | :-: |
 | `maxTaskCount` | `decInt` | `true` | 声明评测端评测能力的整数 |
+| `coreCount` | `decInt` | `false` | 系统逻辑核心数 |
 | `name` | `string` | `false` | 评测机的名字，不建议重复 |
 | `software` | `string` | `false` | 评测机的软件及版本，可以重复 |
 

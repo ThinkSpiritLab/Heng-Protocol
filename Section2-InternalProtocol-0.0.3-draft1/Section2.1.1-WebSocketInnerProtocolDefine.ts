@@ -18,7 +18,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
 
     // ----------------------------------------------------------------
     export interface StatusReportControlPayload {
-        setReportInterval?: number;
+        setReportInterval?: number; //ms
         immediate: boolean;
     }
 
@@ -29,16 +29,11 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
     // ----------------------------------------------------------------
     export interface CpuUsage {
         percentage: number;
-        recent?: {
-            [minute: number]: number;
-        };
+        loadavg?: [number, number, number];
     }
 
     export interface MemoryUsage {
         percentage: number;
-        recent?: {
-            [minute: number]: number;
-        };
     }
 
     export interface HardwareStatus {
@@ -69,7 +64,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         Terminated = "terminated",
     }
 
-    type TimeType = string;
+    type TimeType = string; //　RFC3339
 
     export interface StatusReportPayload {
         time: TimeType;
@@ -110,15 +105,15 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         // 编译: 内存、时间、输出(标准流、生成文件）
 
         runtime: {
-            memory: number;
-            cpuTime: number;
-            output: number;
+            memory: number; //byte
+            cpuTime: number; //milliseconds
+            output: number; //byte
         };
         compiler: {
-            memory: number;
-            cpuTime: number;
-            output: number;
-            message: number;
+            memory: number; //byte
+            cpuTime: number; //milliseconds
+            output: number; //byte
+            message: number; //byte
         };
     }
 
@@ -181,7 +176,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
     // ----------------------------------------------------------------
     export interface ShutdownRequest {
         reboot: boolean;
-        rebootDelay?: number;
+        rebootDelay?: number; // milliseconds
         reason?: string;
     }
 
@@ -205,13 +200,11 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         expectedRecoveryTime?: TimeType;
         hardware: HardwareStatus;
         task: TaskStatus;
-        wasClean: boolean;
         errorInfo: ErrorInfo;
     }
     export interface DisconnectPayloadControler {
         time: TimeType;
         expectedRecoveryTime?: TimeType;
-        wasClean: boolean;
         errorInfo: ErrorInfo;
     }
     export type DisconnectPayload =

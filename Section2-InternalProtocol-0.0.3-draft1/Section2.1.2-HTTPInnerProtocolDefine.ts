@@ -1,7 +1,6 @@
 declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
     // // ---------------------------------------------------
     interface BasicResponse {
-        // contextID: ContextID; // 消息的标识符
         type: ResponseType; // 消息的种类
         body: unknown; // 消息携带的其它信息
         nonce: string;
@@ -62,7 +61,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
     export interface JudgeCaseResult {
         result: JudgeResultType;
         time: number; // ms
-        memory: number; // kib
+        memory: number; // byte
         extraMessage?: string;
     }
 
@@ -95,5 +94,8 @@ declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
         body: ErrorInfo;
     }
     // ----------------------------------------------------------------
-    export type HttpResponse = AckResponse | AuthenticationResponse | ErrorResponse;
+    export type HttpResponse =
+        | AckResponse
+        | AuthenticationResponse
+        | ErrorResponse;
 }
