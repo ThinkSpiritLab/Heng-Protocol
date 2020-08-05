@@ -212,6 +212,8 @@ POST 限制请求体大小为 `1MB`
     .digest('hex')
     ```
 
+    [关于HMAC算法](https://www.biaodianfu.com/hmac.html)
+
 4. 然后即可将 Signature 加入参数列表，完成计算。
 
 ### 公共参数
