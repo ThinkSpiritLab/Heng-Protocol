@@ -220,8 +220,8 @@ POST 限制请求体大小为 `1MB`
 
 | 参数名 | 值类型 | 必选？ | 说明 |
 | :-: | :-: | :-: | :-: |
-| `messageUUID` | `uuid` | `true` | 用于检查消息是否已经处理过 防范重放攻击和保证幂等性 |
-| `timeStamp` | `decInt` | `true` | 过时的消息将被忽略 用于防止重放攻击 |
+| `nonce` | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
+| `timestamp` | `decInt` | `true` | 过时的消息将被忽略 用于防止重放攻击 |
 | `signature` | `string` | `true` | 签名 |
 | `ackey` | `string` | `true` | ackey |
 
