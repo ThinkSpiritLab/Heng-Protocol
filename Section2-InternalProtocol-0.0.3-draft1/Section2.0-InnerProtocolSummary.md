@@ -175,7 +175,7 @@ body 为 `ErrorInfo`
 
 其中 `code` 的含义尚待定义
 
-`message` 应当是人类可读的对断联原因的说明
+`message` 应当是人类可读的对错误原因的说明
 
 ## HTTPS 消息格式
 
