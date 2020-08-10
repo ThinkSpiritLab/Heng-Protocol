@@ -139,7 +139,7 @@ body 为 `StatusReportPayload`
 
 body 为 `StatusReportControlPayload`
 
-其中，`setReportInterval` 以秒计
+其中，`setReportInterval` 以毫秒计
 
 ### 关闭消息
 
@@ -149,7 +149,7 @@ body 为 `StatusReportControlPayload`
 
 body 为 `ShutdownRequest`
 
-其中 `rebootDelay` 以秒计
+其中 `rebootDelay` 以毫秒计
 
 ### 断联消息
 
@@ -274,7 +274,7 @@ URL： `/judges/${taskId}/result`
 
 | 参数名 | 值类型 | 说明 |
 | :-: | :-: | :-: |
-|`taskId`|`string`|计划更新状态的评测|
+|`taskId`|`string`|计划提交结果的评测|
 
 方法: `POST`
 
