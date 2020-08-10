@@ -1,4 +1,4 @@
-export declare namespace Heng.ExternalProtocol.v1.Http.Get {
+export namespace Get {
     export interface BasicHttpResponse<T> {
         statuscode: number;
         message?: string;

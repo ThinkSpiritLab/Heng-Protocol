@@ -1,4 +1,4 @@
-export declare namespace Heng.ExternalProtocol.v1.Http.Post {
+export namespace Post {
     export interface BasicHttpRequest<T> {
         url: string;
         messageid: string;

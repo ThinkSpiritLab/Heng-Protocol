@@ -1,4 +1,4 @@
-declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
+export namespace WebSocketProtocolDefinition {
     interface BasicMessage {
         // contextID: ContextID; // 消息的标识符
         type: MessageType; // 消息的种类
@@ -52,7 +52,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         total: number;
     }
 
-    enum JudgerStatus {
+    export enum JudgerStatus {
         Booting = "booting",
         Booted = "booted",
         RequestingToken = "requestingToken",
@@ -64,7 +64,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         Terminated = "terminated",
     }
 
-    type TimeType = string; //RFC3339
+    export type TimeType = string; //RFC3339
 
     export interface StatusReportPayload {
         time: TimeType;
@@ -100,7 +100,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         Fuse = "fuse",
         All = "all",
     }
-    interface Limit {
+    export interface Limit {
         // 运行：内存、时间、输出
         // 编译: 内存、时间、输出(标准流、生成文件）
 
@@ -117,13 +117,13 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
         };
     }
 
-    interface Excuteable {
+    export interface Excuteable {
         source: File;
         environment: string; // how to compile or excute
         limit: Limit;
     }
 
-    type DynamicFile =
+    export type DynamicFile =
         | {
               type: "builtin";
               name: string; // "user_source" "user_bin"
@@ -134,7 +134,7 @@ declare namespace Heng.InternalProtocol.V0_0_3.WebSocket {
               name: string;
           };
 
-    type Judge =
+    export type Judge =
         | {
               type: JudgeType.Normal;
               user: Excuteable;

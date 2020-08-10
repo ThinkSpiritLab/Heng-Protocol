@@ -1,6 +1,6 @@
-declare namespace Heng.InternalProtocol.V0_0_3.HTTP {
+export namespace HTTPProtocolDefinition {
     // // ---------------------------------------------------
-    interface BasicResponse {
+    export interface BasicResponse {
         type: ResponseType; // 消息的种类
         body: unknown; // 消息携带的其它信息
         nonce: string;
