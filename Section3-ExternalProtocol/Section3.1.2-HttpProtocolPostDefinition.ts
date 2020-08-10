@@ -1,8 +1,7 @@
 export namespace Post {
     export interface BasicHttpRequest<T> {
-        url: string;
-        messageid: string;
-        tiemstamp: string | number; // 64位时间好像超出上界，但是应该影响不大
+        nonce: string;
+        timestamp: number; // 64位时间好像超出上界，但是应该影响不大
         body: T;
         ackey: string;
         signature: string;
@@ -105,8 +104,6 @@ export namespace Post {
     }
     export interface ExtendJudgeRequest {
         taskId: string;
-
-        data?: File; // zip
 
         dynamicFiles?: DynamicFile[]; // provide ["user_source","user_bin"]
 

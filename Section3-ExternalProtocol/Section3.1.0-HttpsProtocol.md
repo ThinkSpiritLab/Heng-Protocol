@@ -1,134 +1,120 @@
 # HTTPS协议
 
-## 消息基本结构
+1. 每个资源具有其各自操作，具体请看说明。
 
-有 GET 和 POST 两种可用方法。
+2. 任意操作均需要使用公共参数，具体请见公共参数说明。
 
-对于任意请求，包含四个必选参数。
+3. 不同版本的协议使用不同前缀，现在使用 `/v1`
 
-- 消息id `messageid`
+4. json 视作字符串处理
 
-  至少在数小时内不重复的字符串，用于防止重放攻击。
+5. 失败情况下返回 `ErrorResponse` ， 不再一一说明
 
-- 时间戳 `timestamp`
+## 公共参数
 
-  消息发出的UNIX时间（UTC时区），如果客户系统与评测系统时间差超过一定程度会导致消息被拒绝。
+| 参数名 | 值类型 | 必选？ | 说明 |
+| :-: | :-: | :-: | :-: |
+| `nonce` | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
+| `timestamp` | `decInt` | `true` | 过时的消息将被忽略 用于防止重放攻击 |
+| `signature` | `string` | `true` | 签名 |
+| `ackey` | `string` | `true` | ackey |
 
-- 签名 `signature`
+## 如何构造签名
 
-  按照下面描述的规则使用 SecrectKey 进行签名的结果，无签名或签名有误的消息将被忽略。
+1. 构造参数字符串
 
-- AccessKey `ackey`
+    1. 对参数排序
+
+        - 按照参数名的字典序
+
+        - 不包括 Signature
+
+    - 字符集为 `UTF-8`
+
+    - 编码规则为 `RFC3986`
+
+    - 用 `=` 连接参数名和值
+
+    - 使用 `&` 分隔参数，头尾没有
+
+2. 构造请求字符串
+
+    `大写HTTP方法名` + `:` + `api 地址` + `?` + `参数字符串`
+
+3. 计算 Signature
+
+    ```typescript
+    let signature = crypto
+    .createHmac("sha256",SecrectKey)
+    .update(RequestString)
+    .digest('hex')
+    ```
+
+    [关于HMAC算法](https://www.biaodianfu.com/hmac.html)
+
+4. 然后即可将 Signature 加入参数列表，完成计算。
+
+>对于 `POST` 认为其 `body` 是一个参数，值为对应的对象字符串化的结果，传输时也是传递字符串。
 
 ## 返回值基本结构
 
 返回一个 json对象，其 `statuscode` 键的值应当等同于 HTTP 应答码，
 可选包含 `message` 字段为额外的说明消息，`body` 字段见说明。
 
-### Get方法
+## 资源
 
-#### 查询评测
+### 评测任务
 
-##### 查询评测的URL
+#### 创建评测任务
 
-`/v1/judges`
+URL: `/v1/judges`
 
-##### 查询评测的参数
+方法: `POST`
 
-- 可选参数 `pagesize` 代表每页返回的数量，默认为 `50`。设为 `0` 代表查询所有的值（可能会很多，慎用）。
+请求体: `CreateJudgeRequest`
 
-- 可选参数 `page` 代表查询的页码，从 `0` 开始计数。
+#### 查询评测列表
 
-- 可选参数 `statusfilter`, 可以包含多个值，代表仅返回状态在所选择的值当中的评测（筛选在分页之后，因此返回值数目必不大于 `pagesize`）。
+URL: `/v1/judges`
 
-<!-- - 可选参数 `order` , 支持按 `time` 排序 -->
+方法: `GET`
 
-##### 查询评测的返回值
+| 参数名 | 值类型 | 必选？ | 说明 |
+| :-: | :-: | :-: | :-: |
+| `pagesize` | `decInt` | `false` | 每页返回的数量上限， 默认为 `50`， 设为 `0` 代表查询所有的值（可能会很多，慎用）|
+| `page` | `decInt` | `false` | 代表查询的页码，从 `0` 开始计数 |
+| `status` | `string[]` | `false` | 查询状态为指定值之一的评测 `,` 分隔多个值 |
 
-一个 `string` 的列表，代表所查询的评测的id
+返回 `JudgesResponse`
 
-#### 查询评测状态或结果
+#### 查询评测的信息
 
-##### 查询评测状态的URL
+URL： `/judges/${taskId}/status`
 
-`/v1/judges/state`
+方法: `GET`
 
-##### 查询评测状态的参数
+返回: `JudgeStatusResponse`
 
-- `judgeid` 表示要查询的评测，用 `,` 分隔来同时查询多个评测。
+#### 查询评测的结果
 
-##### 查询评测状态的返回值
+URL： `/judges/${taskId}/result`
 
-一个 `JudgeState` 对象的数组。具体见定义文件。
-
-#### 查询评测详细信息
-
-##### 查询评测详细信息的URL
-
-`/v1/judges/detail`
-
-##### 查询评测详细信息的参数
-
-- `judgeid` 表示要查询的评测。
-
-##### 查询评测详细信息的返回值
-
-一个 `JudgeDetail` 对象。具体见定义文件。
-
-#### 查询系统负载
-
-##### 查询系统负载的URL
-
-`/v1/system/status`
-
-##### 查询系统负载的参数
+方法: `GET`
 
 无参数
 
-##### 查询系统负载的返回值
+在 `judged` 之前请求会返回 404 和 `ErrorResponse`
 
-一个 `SystemLoad` 对象，包含控制端和评测机的负载等信息。
+返回: `JudgeResultResponse`
 
-#### 签名
+### 系统状态
 
-Get方法的签名应当构造不含主机名的URL串（即如 `方法名?参数名=值&参数2=值` 的字符串），其中 `signature` 参数填写为 `7def6260-cf55-11ea-87d0-0242ac130003`,然后,构造的字符串如下处理得到签名
+#### 查询系统负载
 
-```typescript
-let signature = crypto.createHash('sha256')
-      .update(URLstring)
-      .update(SecrectKey).digest('hex')
-```
+URL: `/v1/system/status`
 
-以查询评测为例。假设访问时间为 `1595779915` , 选定的消息id为 `125E591`,AccessKey 为 `10A9FC6FF1F`,SecrectKey为 `5F1DAB4B`
+方法: `GET`
 
-首先构造字符串为 `/v1/judges?ackey=10A9FC6FF1F&timestamp=1595779915&messageid=125E591&signature=7def6260-cf55-11ea-87d0-0242ac130003`。
+无参数
 
-然后计算得到 `876772dcf8329bacec76fc06979c0fe42c74b161c94bd9608adbfdc6c82fcbb0`。
-
-拼接得到真正的 URL `https://api.localhost/v1/judges?ackey=10A9FC6FF1F&timestamp=1595779915&messageid=125E591&signature=876772dcf8329bacec76fc06979c0fe42c74b161c94bd9608adbfdc6c82fcbb0`。
-
-### Post方法
-
-#### 创建评测
-
-##### 创建评测的URL
-
-`/v1/judges`
-
-##### 创建评测的负载
-
-`CreateJudgeRequest`
-
-##### 创建评测的返回值
-
-`CreateJudgesResponse` 返回创建成功的任务的列表。
-
-#### Post签名
-
-将载荷使用 `JSON.stringify` 字符串化，取 `sha256` 哈希，作为 `payloadHash` 加在 URL 参数中，对URL使用如同Get签名的方法签名。
-
-如提交任务，假设载荷哈希为 `917cbcf20ffdb44b525db310004af7597b512c57cf37ad585d9b37b5e6617cca`，其它同 Get 例。首先按要求拼接字符串为 `/v1/judges?ackey=10A9FC6FF1F&timestamp=1595779915&messageid=125E591&payloadHash=917cbcf20ffdb44b525db310004af7597b512c57cf37ad585d9b37b5e6617cca&signature=7def6260-cf55-11ea-87d0-0242ac130003`
-
-计算得到签名 `3bc7ae6e1145be2dc1f02ba3228973221ac517642c82221fe91b6e8eb6756b97`。即得到URL为
-
-`https://api.localhost/v1/judges?ackey=10A9FC6FF1F&timestamp=1595779915&messageid=125E591&payloadHash=917cbcf20ffdb44b525db310004af7597b512c57cf37ad585d9b37b5e6617cca&signature=3bc7ae6e1145be2dc1f02ba3228973221ac517642c82221fe91b6e8eb6756b97`
+返回: `SystemStatusResponse` 包含控制端和评测机的负载等信息。
