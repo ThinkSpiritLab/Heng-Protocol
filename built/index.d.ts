@@ -1,3 +1,3 @@
-import * as InternalProtocol from "./Section2-InternalProtocol-0.0.3-draft1/index.js";
-import * as ExternalProtocol from "./Section3-ExternalProtocol/index.js";
+import * as InternalProtocol from "./InternalProtocol-0.0.3-draft1/index.js";
+import * as ExternalProtocol from "./ExternalProtocol/index.js";
 export { InternalProtocol, ExternalProtocol };

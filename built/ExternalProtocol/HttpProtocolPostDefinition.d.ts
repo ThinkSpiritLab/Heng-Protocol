@@ -3,7 +3,7 @@ export declare namespace Post {
         nonce: string;
         timestamp: number;
         body: T;
-        ackey: string;
+        accesskey: string;
         signature: string;
     }
     export interface BasicHttpResponse<T> {
