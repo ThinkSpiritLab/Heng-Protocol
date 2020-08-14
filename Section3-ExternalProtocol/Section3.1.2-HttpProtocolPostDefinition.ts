@@ -3,7 +3,7 @@ export namespace Post {
         nonce: string;
         timestamp: number; // 64位时间好像超出上界，但是应该影响不大
         body: T;
-        ackey: string;
+        accesskey: string;
         signature: string;
     }
     export interface BasicHttpResponse<T> {

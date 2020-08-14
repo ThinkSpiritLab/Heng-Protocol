@@ -14,9 +14,9 @@
 
 ### 评测机端的 SecrectKey
 
-评测机端的 SecrectKey 。由控制端生成，与 ackey 相关联。由管理员填入评测机的配置文件中。如不慎泄密或失密，应使用控制端的管理功能注销对应的密钥对。
+评测机端的 SecrectKey 。由控制端生成，与 accesskey 相关联。由管理员填入评测机的配置文件中。如不慎泄密或失密，应使用控制端的管理功能注销对应的密钥对。
 
-### 评测机端的 ackey
+### 评测机端的 AccessKey
 
 用于识别不同的评测机及其密钥，无保密必要
 
@@ -67,7 +67,7 @@
 
 1. 建立连接
 
-    1. 评测端使用 SecrectKey 和 ackey 向控制端申请会话 token。
+    1. 评测端使用 SecrectKey 和 AccessKey 向控制端申请会话 token。
 
     2. 使用 token 建立 ws 连接
 
@@ -223,7 +223,7 @@ POST 限制请求体大小为 `1MB`
 | `nonce` | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
 | `timestamp` | `decInt` | `true` | 过时的消息将被忽略 用于防止重放攻击 |
 | `signature` | `string` | `true` | 签名 |
-| `ackey` | `string` | `true` | ackey |
+| `accesskey` | `string` | `true` | accesskey |
 
 ### 评测机登录
 

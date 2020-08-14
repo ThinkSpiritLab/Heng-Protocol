@@ -4,7 +4,11 @@ export declare namespace Get {
         message?: string;
         body: T;
     }
-    type JudgesResponse = BasicHttpResponse<string[]>;
+    interface JudgesResponsePayload {
+        judges: string[];
+        pageCount: number;
+    }
+    type JudgesResponse = BasicHttpResponse<JudgesResponsePayload>;
     enum JudgeStateEnum {
         Waiting = "Waiting",
         Preparing = "Preparing",
@@ -12,6 +16,19 @@ export declare namespace Get {
         Judging = "Judging",
         Judged = "Judged"
     }
+    interface BriefJudgeCaseResult {
+        result: JudgeResultType;
+        time: number;
+        memory: number;
+    }
+    interface BriefJudgeResult {
+        cases: BriefJudgeCaseResult[];
+    }
+    interface JudgeStatus {
+        judgeId: string;
+        state: JudgeStateEnum.Waiting | JudgeStateEnum.Preparing | JudgeStateEnum.Pending | JudgeStateEnum.Judging | JudgeStateEnum.Judged;
+    }
+    type JudgeStatusResponse = BasicHttpResponse<JudgeStatus>;
     enum JudgeResultType {
         Accepted = "Accepted",
         WrongAnswer = "WrongAnswer",
@@ -31,25 +48,6 @@ export declare namespace Get {
         SystemCompileError = "SystemCompileError",
         Unjudged = "Unjudged"
     }
-    interface BriefJudgeCaseResult {
-        result: JudgeResultType;
-        time: number;
-        memory: number;
-    }
-    interface BriefJudgeResult {
-        cases: BriefJudgeCaseResult[];
-    }
-    interface JudgeWaitingState {
-        judgeId: string;
-        state: JudgeStateEnum.Waiting | JudgeStateEnum.Preparing | JudgeStateEnum.Pending | JudgeStateEnum.Judging;
-    }
-    interface JudgeFinishState {
-        judgeId: string;
-        state: JudgeStateEnum.Judged;
-        result: BriefJudgeResult;
-    }
-    type JudgeState = JudgeWaitingState | JudgeFinishState;
-    type JudgeStateResponse = BasicHttpResponse<JudgeState[]>;
     interface JudgeCaseResult {
         result: JudgeResultType;
         time: number;
@@ -62,17 +60,21 @@ export declare namespace Get {
         extra?: {
             user?: {
                 compileMessage?: string;
+                compileTime?: number;
             };
             spj?: {
                 compileMessage?: string;
+                compileTime?: number;
             };
             interactor?: {
                 compileMessage?: string;
+                compileTime?: number;
             };
         };
     }
-    type JudgeDetailResponse = BasicHttpResponse<JudgeDetail>;
+    type JudgeResultResponse = BasicHttpResponse<JudgeDetail>;
     interface TaskStatus {
+        waiting: number;
         preparing: {
             downloading: number;
             readingCache: number;
@@ -84,15 +86,10 @@ export declare namespace Get {
     }
     interface CpuUsage {
         percentage: number;
-        recent?: {
-            [minute: number]: number;
-        };
+        loadavg?: [number, number, number];
     }
     interface MemoryUsage {
         percentage: number;
-        recent?: {
-            [minute: number]: number;
-        };
     }
     interface HardwareStatus {
         cpu: CpuUsage;
@@ -109,5 +106,5 @@ export declare namespace Get {
     }
     type SystemStatusResponse = BasicHttpResponse<SystemStatus>;
     type ErrorResponse = BasicHttpResponse<undefined>;
-    type HttpResponse = ErrorResponse | JudgesResponse | JudgeStateResponse | JudgeDetailResponse | SystemStatusResponse;
+    type HttpResponse = ErrorResponse | JudgesResponse | JudgeStatusResponse | JudgeResultResponse | SystemStatusResponse;
 }

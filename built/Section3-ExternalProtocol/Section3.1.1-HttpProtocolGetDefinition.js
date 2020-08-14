@@ -12,6 +12,7 @@ var Get;
         JudgeStateEnum["Judging"] = "Judging";
         JudgeStateEnum["Judged"] = "Judged";
     })(JudgeStateEnum = Get.JudgeStateEnum || (Get.JudgeStateEnum = {}));
+    // -------------------------------------------------------------
     let JudgeResultType;
     (function (JudgeResultType) {
         JudgeResultType["Accepted"] = "Accepted";

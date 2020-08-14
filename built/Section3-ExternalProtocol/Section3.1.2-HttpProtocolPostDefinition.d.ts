@@ -1,8 +1,7 @@
 export declare namespace Post {
     export interface BasicHttpRequest<T> {
-        url: string;
-        messageid: string;
-        tiemstamp: string | number;
+        nonce: string;
+        timestamp: number;
         body: T;
         ackey: string;
         signature: string;
@@ -83,7 +82,6 @@ export declare namespace Post {
     }
     export interface ExtendJudgeRequest {
         taskId: string;
-        data?: File;
         dynamicFiles?: DynamicFile[];
         judge: Judge;
     }

@@ -17,7 +17,7 @@
 | `nonce` | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
 | `timestamp` | `decInt` | `true` | 过时的消息将被忽略 用于防止重放攻击 |
 | `signature` | `string` | `true` | 签名 |
-| `ackey` | `string` | `true` | ackey |
+| `accesskey` | `string` | `true` | accesskey |
 
 ## 如何构造签名
 
