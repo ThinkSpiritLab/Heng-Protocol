@@ -1,2 +1,2 @@
-export { HTTPProtocolDefinition } from "./HTTPInnerProtocolDefine.js";
-export { WebSocketProtocolDefinition } from "./WebSocketInnerProtocolDefine.js";
+export { HTTPProtocolDefinition } from "./HTTPInternalProtocolDefine.js";
+export { WebSocketProtocolDefinition } from "./WebSocketInternalProtocolDefine.js";
