@@ -117,7 +117,9 @@ URL: `/v1/judges`
 
 请求体: `CreateJudgeRequest`
 
-##### 查询评测列表
+返回 `JudgesResponse` , 内容为成功创建的评测列表。
+
+<!-- ##### 查询评测列表
 
 URL: `/v1/judges`
 
@@ -149,7 +151,7 @@ URL： `/judges/${taskId}/result`
 
 在 `judged` 之前请求会返回 404 和 `ErrorResponse`
 
-返回: `JudgeResultResponse`
+返回: `JudgeResultResponse` -->
 
 #### 系统状态
 
