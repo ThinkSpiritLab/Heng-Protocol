@@ -21,7 +21,7 @@
         "prettier": "^2.0.5"
     },
     "scripts": {
-        "ci-eslint": "eslint --ext .ts,.js ./",
-        "ci-format": "prettier -c ./**.js ./**.ts"
+        "ci-eslint": "eslint --ext .ts,.js ./src",
+        "ci-format": "prettier -c ./src/**/*.ts"
     }
 }

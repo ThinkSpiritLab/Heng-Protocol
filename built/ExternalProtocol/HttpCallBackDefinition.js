@@ -1,25 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HTTPProtocolDefinition = void 0;
-var HTTPProtocolDefinition;
-(function (HTTPProtocolDefinition) {
-    let ResponseType;
-    (function (ResponseType) {
-        ResponseType[ResponseType["Ack"] = 1] = "Ack";
-        ResponseType[ResponseType["Authentication"] = 3] = "Authentication";
-        ResponseType[ResponseType["Error"] = 127] = "Error";
-    })(ResponseType = HTTPProtocolDefinition.ResponseType || (HTTPProtocolDefinition.ResponseType = {}));
-    // --------------------------------------------------------------------
-    let JudgeState;
-    (function (JudgeState) {
-        JudgeState["Confirmed"] = "confirmed";
-        JudgeState["ReadingCache"] = "readingCache";
-        JudgeState["Downloading"] = "downloading";
-        JudgeState["Pending"] = "pending";
-        JudgeState["Judging"] = "judging";
-        JudgeState["Finished"] = "finished";
-    })(JudgeState = HTTPProtocolDefinition.JudgeState || (HTTPProtocolDefinition.JudgeState = {}));
-    // ----------------------------------------------------------------
+exports.Callbacks = void 0;
+var Callbacks;
+(function (Callbacks) {
+    let JudgeStateEnum;
+    (function (JudgeStateEnum) {
+        JudgeStateEnum["Waiting"] = "Waiting";
+        JudgeStateEnum["Preparing"] = "Preparing";
+        JudgeStateEnum["Pending"] = "Pending";
+        JudgeStateEnum["Judging"] = "Judging";
+        JudgeStateEnum["Judged"] = "Judged";
+    })(JudgeStateEnum = Callbacks.JudgeStateEnum || (Callbacks.JudgeStateEnum = {}));
     let JudgeResultType;
     (function (JudgeResultType) {
         JudgeResultType["Accepted"] = "Accepted";
@@ -39,5 +30,5 @@ var HTTPProtocolDefinition;
         JudgeResultType["SystemRuntimeError"] = "SystemRuntimeError";
         JudgeResultType["SystemCompileError"] = "SystemCompileError";
         JudgeResultType["Unjudged"] = "Unjudged";
-    })(JudgeResultType = HTTPProtocolDefinition.JudgeResultType || (HTTPProtocolDefinition.JudgeResultType = {}));
-})(HTTPProtocolDefinition = exports.HTTPProtocolDefinition || (exports.HTTPProtocolDefinition = {}));
+    })(JudgeResultType = Callbacks.JudgeResultType || (Callbacks.JudgeResultType = {}));
+})(Callbacks = exports.Callbacks || (exports.Callbacks = {}));

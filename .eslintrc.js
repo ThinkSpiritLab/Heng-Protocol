@@ -15,6 +15,7 @@ module.exports = {
         "linebreak-style": ["error", "unix"],
         quotes: ["error", "double"],
         semi: ["error", "always"],
+        "import/no-unresolved": "off",
         "@typescript-eslint/no-namespace": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["warn"],

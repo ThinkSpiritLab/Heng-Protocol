@@ -119,6 +119,15 @@ URL: `/v1/judges`
 
 返回 `JudgesResponse` , 内容为成功创建的评测列表。
 
+说明：
+
+创建评测时，通过 `judgeCallback` 字段注册回调，为了安全起见，注册的回调 `URL` 应当包含不能被猜测的路径或参数。
+
+当触发状态回调时，控制端会以 `PUT` 方法访问 `judgeState` ，数据内容为 `JudgeStatus` 。
+
+当触发结果回调时，控制端会以 `POST` 方法访问 `judgeResult` ，数据内容为 `JudgeDetail` 。
+
+当回调 `URL` 返回非 `2xx` 返回码时，控制端的行为由实现定义，不保证保存数据。
 <!-- ##### 查询评测列表
 
 URL: `/v1/judges`

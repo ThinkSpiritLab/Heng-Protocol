@@ -1,17 +1,17 @@
 export declare namespace Post {
-    export interface BasicHttpRequest<T> {
+    interface BasicHttpRequest<T> {
         nonce: string;
         timestamp: number;
         body: T;
         accesskey: string;
         signature: string;
     }
-    export interface BasicHttpResponse<T> {
+    interface BasicHttpResponse<T> {
         statuscode: number;
         message?: string;
         body: T;
     }
-    export type File = {
+    type File = {
         id: string;
         hashsum?: string;
     } & ({
@@ -20,12 +20,12 @@ export declare namespace Post {
     } | {
         content: string;
     });
-    export enum JudgeType {
+    enum JudgeType {
         Normal = "normal",
         Special = "special",
         Interactive = "interactive"
     }
-    export enum TestPolicy {
+    enum TestPolicy {
         Fuse = "fuse",
         All = "all"
     }
@@ -67,7 +67,12 @@ export declare namespace Post {
         user: Excuteable;
         interactor: Excuteable;
     };
-    export interface JudgeRequest {
+    type CallBackUrl = string;
+    interface JudgeCallback {
+        judgeState?: CallBackUrl;
+        judgeResult: CallBackUrl;
+    }
+    interface JudgeRequest {
         taskId: string;
         data?: File;
         dynamicFiles?: DynamicFile[];
@@ -79,17 +84,18 @@ export declare namespace Post {
             }[];
             policy: TestPolicy;
         };
+        judgeCallback: JudgeCallback;
     }
-    export interface ExtendJudgeRequest {
+    interface ExtendJudgeRequest {
         taskId: string;
         dynamicFiles?: DynamicFile[];
         judge: Judge;
+        judgeCallback?: JudgeCallback;
     }
-    export interface CreateJudgePayload {
+    interface CreateJudgePayload {
         mainJudge: JudgeRequest;
         extra?: ExtendJudgeRequest[];
     }
-    export type CreateJudgeRequest = BasicHttpRequest<CreateJudgePayload>;
-    export type CreateJudgesResponse = BasicHttpResponse<string[]>;
-    export {};
+    type CreateJudgeRequest = BasicHttpRequest<CreateJudgePayload>;
+    type CreateJudgesResponse = BasicHttpResponse<string[]>;
 }

@@ -1,32 +1,14 @@
-export declare namespace HTTPProtocolDefinition {
-    interface BasicResponse {
-        type: ResponseType;
-        body: unknown;
-        nonce: string;
+export declare namespace Callbacks {
+    enum JudgeStateEnum {
+        Waiting = "Waiting",
+        Preparing = "Preparing",
+        Pending = "Pending",
+        Judging = "Judging",
+        Judged = "Judged"
     }
-    enum ResponseType {
-        Ack = 1,
-        Authentication = 3,
-        Error = 127
-    }
-    interface AckResponse extends BasicResponse {
-        type: ResponseType.Ack;
-        body: undefined;
-    }
-    interface AuthenticationPayload {
-        JWTToken: string;
-    }
-    interface AuthenticationResponse extends BasicResponse {
-        type: ResponseType.Authentication;
-        body: AuthenticationPayload;
-    }
-    enum JudgeState {
-        Confirmed = "confirmed",
-        ReadingCache = "readingCache",
-        Downloading = "downloading",
-        Pending = "pending",
-        Judging = "judging",
-        Finished = "finished"
+    interface JudgeStatus {
+        judgeId: string;
+        state: JudgeStateEnum.Waiting | JudgeStateEnum.Preparing | JudgeStateEnum.Pending | JudgeStateEnum.Judging | JudgeStateEnum.Judged;
     }
     enum JudgeResultType {
         Accepted = "Accepted",
@@ -53,8 +35,8 @@ export declare namespace HTTPProtocolDefinition {
         memory: number;
         extraMessage?: string;
     }
-    interface JudgeResult {
-        taskId: string;
+    interface JudgeDetail {
+        judgeId: string;
         cases: JudgeCaseResult[];
         extra?: {
             user?: {
@@ -71,13 +53,4 @@ export declare namespace HTTPProtocolDefinition {
             };
         };
     }
-    interface ErrorInfo {
-        code: number;
-        message?: string;
-    }
-    interface ErrorResponse extends BasicResponse {
-        type: ResponseType.Error;
-        body: ErrorInfo;
-    }
-    type HttpResponse = AckResponse | AuthenticationResponse | ErrorResponse;
 }

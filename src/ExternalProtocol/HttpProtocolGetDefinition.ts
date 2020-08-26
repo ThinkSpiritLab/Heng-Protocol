@@ -12,8 +12,6 @@ export namespace Get {
 
     export type JudgesResponse = BasicHttpResponse<JudgesResponsePayload>;
     // ----------------------------------------------------------------
-
-
     // export type JudgeStatusResponse = BasicHttpResponse<JudgeStatus>;
     // -------------------------------------------------------------
     // export type JudgeResultResponse = BasicHttpResponse<JudgeDetail>;

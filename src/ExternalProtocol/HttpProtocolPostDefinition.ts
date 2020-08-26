@@ -34,7 +34,7 @@ export namespace Post {
         Fuse = "fuse",
         All = "all",
     }
-    interface Limit {
+    export interface Limit {
         // 运行：内存、时间、输出
         // 编译: 内存、时间、输出(标准流、生成文件）
 
@@ -51,13 +51,13 @@ export namespace Post {
         };
     }
 
-    interface Excuteable {
+    export interface Excuteable {
         source: File;
         environment: string; // how to compile or excute
         limit: Limit;
     }
 
-    type DynamicFile =
+    export type DynamicFile =
         | {
               type: "builtin";
               name: string; // "user_source" "user_bin"
@@ -68,7 +68,7 @@ export namespace Post {
               name: string;
           };
 
-    type Judge =
+    export type Judge =
         | {
               type: JudgeType.Normal;
               user: Excuteable;
@@ -83,7 +83,11 @@ export namespace Post {
               user: Excuteable;
               interactor: Excuteable;
           };
-
+    export type CallBackUrl = string;
+    export interface JudgeCallback {
+        judgeState?: CallBackUrl;
+        judgeResult: CallBackUrl;
+    }
     export interface JudgeRequest {
         taskId: string;
 
@@ -101,6 +105,8 @@ export namespace Post {
 
             policy: TestPolicy; // 全部/短路
         };
+
+        judgeCallback: JudgeCallback;
     }
     export interface ExtendJudgeRequest {
         taskId: string;
@@ -108,6 +114,8 @@ export namespace Post {
         dynamicFiles?: DynamicFile[]; // provide ["user_source","user_bin"]
 
         judge: Judge;
+
+        judgeCallback?: JudgeCallback;
     }
     export interface CreateJudgePayload {
         mainJudge: JudgeRequest;
