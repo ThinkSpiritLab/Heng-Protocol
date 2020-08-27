@@ -4,6 +4,7 @@
         // "outFile": "./built/index.js",
         "module": "commonjs",
         "target": "es6",
+        "newLine":"LF",
         "declaration": true
     },
     "include": [

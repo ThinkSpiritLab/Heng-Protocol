@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Callbacks = void 0;
 var Callbacks;
 (function (Callbacks) {
     let JudgeStateEnum;

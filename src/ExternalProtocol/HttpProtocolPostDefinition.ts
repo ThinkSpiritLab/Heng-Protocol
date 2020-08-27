@@ -84,9 +84,9 @@ export namespace Post {
               interactor: Excuteable;
           };
     export type CallBackUrl = string;
-    export interface JudgeCallback {
-        judgeState?: CallBackUrl;
-        judgeResult: CallBackUrl;
+    export interface JudgeCallbackUrls {
+        judgeStateCallBackUrl?: CallBackUrl;
+        judgeResultCallBackUrl: CallBackUrl;
     }
     export interface JudgeRequest {
         taskId: string;
@@ -106,7 +106,7 @@ export namespace Post {
             policy: TestPolicy; // 全部/短路
         };
 
-        judgeCallback: JudgeCallback;
+        judgeCallbackUrls: JudgeCallbackUrls;
     }
     export interface ExtendJudgeRequest {
         taskId: string;
@@ -115,7 +115,7 @@ export namespace Post {
 
         judge: Judge;
 
-        judgeCallback?: JudgeCallback;
+        judgeCallbackUrls?: JudgeCallbackUrls;
     }
     export interface CreateJudgePayload {
         mainJudge: JudgeRequest;
