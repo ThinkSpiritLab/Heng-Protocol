@@ -65,5 +65,3 @@
 ##### 评测机
 
 ![strcture-judger](./plantumlsrc/strcture-judger.svg)
-
-## 协议组成
