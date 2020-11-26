@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WebSocketProtocolDefinition = void 0;
 var WebSocketProtocolDefinition;
 (function (WebSocketProtocolDefinition) {
     let MessageType;
