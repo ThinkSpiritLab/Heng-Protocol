@@ -6,7 +6,7 @@
 
 同时采用 控制/从机 架构，使得在需要的时候可以快速向评测系统中添加算力，以应对例如大规模重测一类的突发需求。
 
-系统由评测控制端和评测机组成。系统内部的通信由[内部协议](./InternalProtocolSummary.md)定义。系统与客户系统如在线评测系统的通信由[外部协议](./ExternalProtocolSummary.md)定义。代码形式的详细定义可以在 [src](./src)中找到。
+系统由评测控制端和评测机组成。系统内部的通信由[内部协议](./docs/InternalProtocol.md)定义。系统与客户系统如在线评测系统的通信由[外部协议](./docs/ExternalProtocol.md)定义。本仓库中给出了 TypeScript 形式的详细定义。
 
 ## 开发背景
 
@@ -60,8 +60,8 @@
 
 ##### 系统
 
-![strcture-system](./plantumlsrc/strcture-system.svg)
+![strcture-system](./docs/images/plantuml/strcture-system.svg)
 
 ##### 评测机
 
-![strcture-judger](./plantumlsrc/strcture-judger.svg)
+![strcture-judger](./docs/images/plantuml/strcture-judger.svg)

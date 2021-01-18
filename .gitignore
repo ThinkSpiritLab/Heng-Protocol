@@ -1,3 +1,6 @@
-node_modules
-built
-.vscode
+/node_modules
+
+/internal-protocol/*.js
+/internal-protocol/*.d.ts
+/external-protocol/*.js
+/external-protocol/*.d.ts
