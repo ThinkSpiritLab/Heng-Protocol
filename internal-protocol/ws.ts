@@ -1,94 +1,142 @@
 export interface Message {
-    type: "req" | "res",
-    seq: number, // u32
-    time: string, // RFC3339
-    body: unknown,
+    type: "req" | "res";
+    seq: number; // u32
+    time: string; // RFC3339
+    body: unknown;
 }
 
 export interface Request<M extends string, A = unknown> extends Message {
-    type: "req",
+    type: "req";
     body: {
-        method: M, // RPC method name
-        args: A, // RPC arguments
-    }
+        method: M; // RPC method name
+        args: A; // RPC arguments
+    };
 }
 
 export interface Response<R = unknown> extends Message {
-    type: "res",
-    body: {
-        output: R, // RPC output
-    } | {
-        error: ErrorInfo
-    }
+    type: "res";
+    body:
+        | {
+              output: R; // RPC output
+          }
+        | {
+              error: ErrorInfo;
+          };
 }
 
-export type JudgeRequest = Request<"Judge", {
-    id: string,
-    data?: File,
-    dynamicFiles?: DynamicFile[],
-    judge: Judge,
+export type JudgeArgs = {
+    id: string;
+    data?: File;
+    dynamicFiles?: DynamicFile[];
+    judge: Judge;
     test?: {
-        cases: TestCase[],
-        policy: TestPolicy,
+        cases: TestCase[];
+        policy: TestPolicy;
     };
-}>;
+};
+
+export type JudgeRequest = Request<"Judge", JudgeArgs>;
 
 export type JudgeResponse = Response<null>;
 
-export type ShutdownRequest = Request<"Shutdown", {
-    reboot: boolean,
-    rebootDelay?: number, // milliseconds
-    reason?: string,
-}>;
+export type ExitArgs = {
+    reconnect?: {
+        delay: number; // milliseconds
+    };
+    reason?: string;
+};
 
-export type ShutdownResponse = Response<null>;
+export type ExitRequest = Request<"Exit", ExitArgs>;
 
-export type ReportStatusRequest = Request<"ReportStatus", {
-    collectTime: string,
-    nextReportTime: string,
-    report: StatusReport,
-}>
+export type ExitResponse = Response<null>;
+
+export type LogArgs = {
+    level: "warn" | "error";
+    code: number;
+    message: string;
+};
+
+export type LogRequest = Request<"Log", LogArgs>;
+
+export type LogResponse = Response<null>;
+
+export type ControlArgs = Partial<ConnectionSettings> | null;
+
+export type ControlRequest = Request<"Control", ControlArgs>;
+
+export type ControlResponse = Response<ConnectionSettings>;
+
+export type ReportStatusArgs = {
+    collectTime: string; // RFC3339
+    nextReportTime: string; // RFC3339
+    report: StatusReport;
+};
+
+export type ReportStatusRequest = Request<"ReportStatus", ReportStatusArgs>;
 
 export type ReportStatusResponse = Response<null>;
 
-export type UpdateJudgesRequest = Request<"UpdateJudges", {
-    id: string,
-    state: JudgeState,
-}[]>
+export type UpdateJudgesArgs = {
+    id: string;
+    state: JudgeState;
+}[];
+
+export type UpdateJudgesRequest = Request<"UpdateJudges", UpdateJudgesArgs>;
 
 export type UpdateJudgesResponse = Response<null>;
 
-export type FinishJudgesRequest = Request<"FinishJudges", {
-    id: string,
-    result: JudgeResult,
-}[]>
+export type FinishJudgesArgs = {
+    id: string;
+    result: JudgeResult;
+}[];
+
+export type FinishJudgesRequest = Request<"FinishJudges", FinishJudgesArgs>;
 
 export type FinishJudgesResponse = Response<null>;
+
+export type JudgerMethod = "Judge" | "Exit" | "Control";
+export type JudgerArgs = JudgeArgs | ExitArgs | ControlArgs;
+
+export type ControllerMethod =
+    | "Exit"
+    | "Log"
+    | "ReportStatus"
+    | "UpdateJudges"
+    | "FinishJudges";
+export type ControllerArgs =
+    | ExitArgs
+    | LogArgs
+    | ReportStatusArgs
+    | UpdateJudgesArgs
+    | FinishJudgesArgs;
+
+export interface ConnectionSettings {
+    statusReportInterval: number; // milliseconds
+}
 
 export type File = {
     id: string;
     hashsum?: string;
 } & (
-        | {
-            url: string;
-            authorization?: string;
-        }
-        | {
-            content: string;
-        }
-    );
+    | {
+          url: string;
+          authorization?: string;
+      }
+    | {
+          content: string;
+      }
+);
 
 export type DynamicFile =
     | {
-        type: "builtin";
-        name: string;
-    }
+          type: "builtin";
+          name: string;
+      }
     | {
-        type: "remote";
-        file: File;
-        name: string;
-    };
-
+          type: "remote";
+          file: File;
+          name: string;
+      };
 
 export enum TestPolicy {
     Fuse = "fuse",
@@ -128,19 +176,19 @@ export enum JudgeType {
 
 export type Judge =
     | {
-        type: JudgeType.Normal;
-        user: Executable;
-    }
+          type: JudgeType.Normal;
+          user: Executable;
+      }
     | {
-        type: JudgeType.Special;
-        user: Executable;
-        spj: Executable;
-    }
+          type: JudgeType.Special;
+          user: Executable;
+          spj: Executable;
+      }
     | {
-        type: JudgeType.Interactive;
-        user: Executable;
-        interactor: Executable;
-    };
+          type: JudgeType.Interactive;
+          user: Executable;
+          interactor: Executable;
+      };
 
 export interface ErrorInfo {
     code: number;
@@ -150,19 +198,19 @@ export interface ErrorInfo {
 export interface StatusReport {
     hardware: {
         cpu: {
-            percentage: number,
-            loadavg?: [number, number, number],
-        },
+            percentage: number;
+            loadavg?: [number, number, number];
+        };
         memory: {
-            percentage: number,
-        }
+            percentage: number;
+        };
     };
     task: {
         pending: number;
         preparing: {
-            downloading: number,
-            readingCache: number,
-            compiling: number,
+            downloading: number;
+            readingCache: number;
+            compiling: number;
         };
         judging: number;
         finished: number;
@@ -226,4 +274,3 @@ export interface JudgeResult {
         };
     };
 }
-
