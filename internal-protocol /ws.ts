@@ -35,13 +35,19 @@ export type JudgeRequest = Request<"Judge", {
 
 export type JudgeResponse = Response<null>;
 
-export type ShutdownRequest = Request<"Shutdown", {
-    reboot: boolean,
-    rebootDelay?: number, // milliseconds
+export type ExitRequest = Request<"Exit", {
     reason?: string,
 }>;
 
-export type ShutdownResponse = Response<null>;
+export type ExitResponse = Response<null>;
+
+export type LogRequest = Request<"Log", {
+    level: "warn" | "error",
+    code: number,
+    message: string,
+}>
+
+export type LogResponse = Response<null>;
 
 export type ReportStatusRequest = Request<"ReportStatus", {
     collectTime: string,
