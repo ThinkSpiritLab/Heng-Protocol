@@ -36,6 +36,9 @@ export type JudgeRequest = Request<"Judge", {
 export type JudgeResponse = Response<null>;
 
 export type ExitRequest = Request<"Exit", {
+    reconnect?: {
+        delay: number // milliseconds
+    }
     reason?: string,
 }>;
 
@@ -50,8 +53,8 @@ export type LogRequest = Request<"Log", {
 export type LogResponse = Response<null>;
 
 export type ReportStatusRequest = Request<"ReportStatus", {
-    collectTime: string,
-    nextReportTime: string,
+    collectTime: string, // RFC3339
+    nextReportTime: string, // RFC3339
     report: StatusReport,
 }>
 
