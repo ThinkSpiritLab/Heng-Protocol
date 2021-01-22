@@ -52,6 +52,10 @@ export type LogRequest = Request<"Log", {
 
 export type LogResponse = Response<null>;
 
+export type ControlRequest = Request<"Control", Partial<ConnectionSettings> | null>
+
+export type ControlResponse = Response<ConnectionSettings>;
+
 export type ReportStatusRequest = Request<"ReportStatus", {
     collectTime: string, // RFC3339
     nextReportTime: string, // RFC3339
@@ -73,6 +77,10 @@ export type FinishJudgesRequest = Request<"FinishJudges", {
 }[]>
 
 export type FinishJudgesResponse = Response<null>;
+
+export interface ConnectionSettings {
+    statusReportInterval: number, // milliseconds
+}
 
 export type File = {
     id: string;

@@ -138,6 +138,12 @@ WebSocket 连接地址为 `/v1/judgers/websocket`
 
 评测端向控制端发送日志。
 
+#### Control
+
+提供方：评测端
+
+控制端获取或改变评测端的连接设置，评测端应当返回改变后的连接设置。
+
 #### ReportStatus
 
 提供方：控制端
