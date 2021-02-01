@@ -96,6 +96,7 @@ export type FinishJudgesResponse = Response<null>;
 
 export type JudgerMethod = "Judge" | "Exit" | "Control";
 export type JudgerArgs = JudgeArgs | ExitArgs | ControlArgs;
+export type JudgerRequest = JudgeRequest | ExitRequest | ControlRequest;
 
 export type ControllerMethod =
     | "Exit"
@@ -103,12 +104,20 @@ export type ControllerMethod =
     | "ReportStatus"
     | "UpdateJudges"
     | "FinishJudges";
+
 export type ControllerArgs =
     | ExitArgs
     | LogArgs
     | ReportStatusArgs
     | UpdateJudgesArgs
     | FinishJudgesArgs;
+
+export type ControllerRequest =
+    | ExitRequest
+    | LogRequest
+    | ReportStatusRequest
+    | UpdateJudgesRequest
+    | FinishJudgesRequest;
 
 export interface ConnectionSettings {
     statusReportInterval: number; // milliseconds
