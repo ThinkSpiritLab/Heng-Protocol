@@ -4,3 +4,5 @@
 /internal-protocol/*.d.ts
 /external-protocol/*.js
 /external-protocol/*.d.ts
+
+.vscode
