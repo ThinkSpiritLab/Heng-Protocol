@@ -178,8 +178,6 @@ POST 限制请求体大小为 `1MB`
 
         - 按照参数名的字典序
 
-        - 不包括 Signature
-
     - 字符集为 `UTF-8`
 
     - 编码规则为 `RFC3986`
@@ -188,11 +186,27 @@ POST 限制请求体大小为 `1MB`
 
     - 使用 `&` 分隔参数，头尾没有
 
-2. 构造请求字符串
+2. 构造请求头字符串
 
-    `大写HTTP方法名` + `:` + `api 地址` + `?` + `参数字符串`
+    1. 对Header排序
 
-3. 计算 Signature
+        - 按照Header名的字典序
+
+        - 不包括 `x-heng-signature`
+
+    - 字符集为 `UTF-8`
+
+    - 编码规则为 `RFC3986`
+
+    - 用 `=` 连接Header名和值
+
+    - 使用 `&` 分隔Header，头尾没有
+
+3. 构造请求字符串
+
+    `大写HTTP方法名` + `:` + `请求头字符串` + `:` + `api 地址` + `?` + `参数字符串`
+
+4. 计算 Signature
 
     ```typescript
     let signature = crypto
@@ -203,7 +217,7 @@ POST 限制请求体大小为 `1MB`
 
     [关于HMAC算法](https://www.biaodianfu.com/hmac.html)
 
-4. 然后即可将 Signature 加入参数列表，完成计算。
+5. 然后即可将 `x-heng-signature` 加入请求头，完成计算。
 
 ### 公共参数
 
