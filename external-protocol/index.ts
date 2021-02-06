@@ -16,6 +16,7 @@ export interface ErrorResponse {
 }
 
 export type CreateJudgeRequest = {
+    id: string;
     data?: File;
     dynamicFiles?: DynamicFile[];
     judge: Judge;
