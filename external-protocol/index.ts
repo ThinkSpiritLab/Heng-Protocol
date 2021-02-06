@@ -8,7 +8,7 @@ import {
     JudgeResult,
     JudgeStatus,
     HardwareStatus,
-} from "../internal-protocol";
+} from "../";
 
 export interface ErrorResponse {
     code: number;

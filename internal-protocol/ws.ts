@@ -1,15 +1,15 @@
 import {
-    ConnectionSettings,
     JudgeState,
     JudgeResult,
     StatusReport,
-    ErrorInfo,
     DynamicFile,
     File,
     Judge,
     TestCase,
     TestPolicy,
-} from "./index";
+} from "../";
+
+import { ConnectionSettings, ErrorInfo } from "./";
 
 export interface Message {
     type: "req" | "res";
