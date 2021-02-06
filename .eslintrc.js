@@ -1,23 +1,29 @@
 /* eslint-env node */
 module.exports = {
-    root: true,
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint"],
+    parserOptions: {
+        project: "tsconfig.json",
+        tsconfigRootDir: __dirname,
+        sourceType: "module",
+    },
+    plugins: ["@typescript-eslint/eslint-plugin"],
     extends: [
-        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:import/errors",
-        "plugin:import/warnings",
         "prettier",
+        "prettier/@typescript-eslint",
     ],
+    root: true,
+    env: {
+        node: true,
+        jest: true,
+    },
     rules: {
-        indent: ["error", 4],
+        "indent": ["error", 4],
         "linebreak-style": ["error", "unix"],
-        quotes: ["error", "double"],
-        semi: ["error", "always"],
-        "import/no-unresolved": "off",
-        "@typescript-eslint/no-namespace": "off",
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
         "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": ["warn"],
+        "@typescript-eslint/no-unused-vars": ["warn"]
     },
 };

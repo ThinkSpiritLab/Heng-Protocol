@@ -1,27 +1,24 @@
 {
     "name": "heng-protocol",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "license": "MIT",
-    "type": "commonjs",
-    "main": "built/index.js",
-    "types": "built/index.d.ts",
-    "private": true,
-    "contributors": [
-        {
-            "name": "ThinkSpiritDevelopers"
-        }
-    ],
-    "devDependencies": {
-        "typescript": "^3.9.7",
-        "@typescript-eslint/eslint-plugin": "^3.7.0",
-        "@typescript-eslint/parser": "^3.7.0",
-        "eslint": "^7.5.0",
-        "eslint-config-prettier": "^6.11.0",
-        "eslint-plugin-import": "^2.22.0",
-        "prettier": "^2.0.5"
+    "author": {
+        "name": "ThinkSpirit Developers"
     },
     "scripts": {
-        "ci-eslint": "eslint --ext .ts,.js ./src",
-        "ci-format": "prettier -c ./src/**/*.ts"
+        "build": "tsc",
+        "format": "prettier --write external-protocol/*.ts internal-protocol/*.ts",
+        "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts",
+        "lint": "eslint external-protocol internal-protocol --fix",
+        "check:lint": "eslint external-protocol internal-protocol -f codeframe"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^4.14.1",
+        "@typescript-eslint/parser": "^4.14.1",
+        "eslint": "^7.18.0",
+        "eslint-config-prettier": "^7.2.0",
+        "eslint-plugin-import": "^2.22.1",
+        "prettier": "^2.2.1",
+        "typescript": "^4.1.3"
     }
 }

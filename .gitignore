@@ -1,3 +1,8 @@
-node_modules
-built
+/node_modules
+
+/internal-protocol/*.js
+/internal-protocol/*.d.ts
+/external-protocol/*.js
+/external-protocol/*.d.ts
+
 .vscode
