@@ -1,10 +1,9 @@
 export type File = {
-    id: string;
-    hashsum?: string;
+    hashsum?: string; //sha256
 } & (
     | {
           url: string;
-          authorization?: string;
+          //authorization?: string;
       }
     | {
           content: string;
@@ -14,7 +13,7 @@ export type File = {
 export type DynamicFile =
     | {
           type: "builtin";
-          name: string;
+          name: string; // provide: "usr:code" "spj:code" "interactor:code"
       }
     | {
           type: "remote";
@@ -27,12 +26,10 @@ export enum TestPolicy {
     All = "all",
 }
 
-
 export interface TestCase {
-    input: string; // file path or dynamic file identifier
-    output: string; // file path or dynamic file identifier
+    input: string; // file path in compressed main File or dynamic file identifier
+    output: string; // file path in compressed main File or dynamic file identifier
 }
-
 
 export enum JudgeType {
     Normal = "normal",
@@ -56,13 +53,11 @@ export type Judge =
           interactor: Executable;
       };
 
-
 export interface Executable {
     source: File;
     environment: string; // how to compile or excute
     limit: Limit;
 }
-
 
 export interface JudgeStatus {
     pending: number;
@@ -100,12 +95,10 @@ export interface Limit {
     };
 }
 
-
 export interface StatusReport {
     hardware: HardwareStatus;
     judge: JudgeStatus;
 }
-
 
 export enum JudgeState {
     Confirmed = "confirmed",
