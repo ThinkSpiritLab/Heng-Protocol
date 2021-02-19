@@ -59,3 +59,11 @@
 | `x-heng-timestamp` | `timestamp` | `decInt` | `true` |   过时的消息将被忽略 用于防止重放攻击   |
 | `x-heng-signature` | `signature` | `string` | `true` |                  签名                   |
 | `x-heng-accesskey` | `accesskey` | `string` | `true` |            客户系统或评测端 AccessKey             |
+
+## 软件环境
+
+客户系统通过 `Executable` 的 `environment` 字段指定程序的运行环境。
+
+不同语言，系统和架构可能会有不同的选项。
+
+在同一个评测任务内，spj，usr 和 interactor 必须拥有相同的 system 和 arch。
