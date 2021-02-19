@@ -66,4 +66,4 @@
 
 不同语言，系统和架构可能会有不同的选项。
 
-在同一个评测任务内，spj，usr 和 interactor 必须拥有相同的 system 和 arch。
+在同一个评测任务内，spj，user 和 interactor 必须拥有相同的 system 和 arch。
