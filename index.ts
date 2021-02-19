@@ -2,10 +2,12 @@ export type File = {
     hashsum?: string; //sha256
 } & (
     | {
+          type: "url";
           url: string;
           //authorization?: string;
       }
     | {
+          type: "direct";
           content: string;
       }
 );
@@ -55,7 +57,12 @@ export type Judge =
 
 export interface Executable {
     source: File;
-    environment: string; // how to compile or excute
+    environment: {
+        language: string;
+        system: "Windows" | "Linux" | "Darwin";
+        arch: "x64" | "arm" | "risc-v" | "powerpc" | "mips";
+        options: { [key: string]: string | number | boolean };
+    }; // how to compile or excute
     limit: Limit;
 }
 
