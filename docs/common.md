@@ -2,63 +2,83 @@
 
 ## HTTP 通信
 
-### 如何构造签名
+### 如何验证签名
 
-1. 构造参数字符串
+签名字符串：
 
-    1. 对参数排序
+```
+{http method}\n
+{url path}\n
+{query strings}\n
+{signed headers}\n
+{body hash}\n
+```
 
-        - 按照参数名的字典序
+1. {http method}
 
-    - 字符集为 `UTF-8`
+    大写 HTTP 方法名，例如 `GET`, `POST`。
 
-    - 编码规则为 `RFC3986`
+2. {url path}
 
-    - 用 `=` 连接参数名和值
+    以 '/' 开头的 URL 路径，例如 `/v1/judgers/token`
 
-    - 使用 `&` 分隔参数，头尾没有
+3. {query strings}
 
-2. 构造请求头字符串
+    1. 将所有查询参数按照 name 的字典序排序
+    2. value 按照 RFC3986 编码
+    3. name 和 value 之间用 '=' 连接
+    4. 键值对之间用 '&' 连接
 
-    1. 对Header排序
+    例如 `name1=value&name2=%2Bvalue2`
 
-        - 按照Header名的字典序
+4. {signed headers}
 
-        - 不包括 `x-heng-signature`
+    1. 将白名单内的所有请求头按照 name 的字典序排序
+    2. name 转为小写
+    3. value 按照 RFC3986 编码
+    4. name 和 value 之间用 '=' 连接
+    5. 键值对之间用 '&' 连接
 
-    - 字符集为 `UTF-8`
+5. {body hash}
 
-    - 编码规则为 `RFC3986`
+    1. 如果没有 body，返回 Hex(SHA256("")))
+    2. 如果有 body，返回 Hex(SHA256(body)))
 
-    - 用 `=` 连接Header名和值
+    例如：(空字符串哈希)
+    `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` 
 
-    - 使用 `&` 分隔Header，头尾没有
+6. 以上 5 个部分分别加换行符 '\n'，连接起来，得到 RequestString
 
-3. 构造请求字符串
-
-    `大写HTTP方法名` + `:` + `请求头字符串` + `:` + `api 地址` + `?` + `参数字符串`
-
-4. 计算 Signature
+7. signature = Hex(HMAC_SHA256(SecretKey, RequestString)))
 
     ```typescript
-    let signature = crypto
-    .createHmac("sha256",SecrectKey)
-    .update(RequestString)
-    .digest('hex')
+    const signature = crypto
+        .createHmac("sha256", SecrectKey)
+        .update(RequestString)
+        .digest('hex')
     ```
 
     [关于HMAC算法](https://www.biaodianfu.com/hmac.html)
 
-5. 然后即可将 `x-heng-signature` 加入请求头，完成计算。
+8. 将计算得到的 signature 与请求头中的 `x-heng-signature` 比对，如果完全一致，那么签名正确。
 
-### 公共参数
+以上字符集均为 UTF-8
 
-|     Header 名      |   参数名    |  值类型  | 必选？ |                  说明                   |
-| :----------------: | :---------: | :------: | :----: | :-------------------------------------: |
-|   `x-heng-nonce`   |   `nonce`   | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
-| `x-heng-timestamp` | `timestamp` | `decInt` | `true` |   过时的消息将被忽略 用于防止重放攻击   |
-| `x-heng-signature` | `signature` | `string` | `true` |                  签名                   |
-| `x-heng-accesskey` | `accesskey` | `string` | `true` |            客户系统或评测端 AccessKey             |
+| 请求头白名单       |
+| ------------------ |
+| `content-type`     |
+| `x-heng-accesskey` |
+| `x-heng-nonce`     |
+| `x-heng-timestamp` |
+
+### 公共请求头
+
+|     Header 名      |  值类型  |  必选  |                  说明                   |
+| :----------------: | :------: | :----: | :-------------------------------------: |
+| `x-heng-accesskey` | `string` | `true` |       客户系统或评测端 AccessKey        |
+|   `x-heng-nonce`   | `string` | `true` | 用于检查消息是否已经处理过 防范重放攻击 |
+| `x-heng-timestamp` | `decInt` | `true` |     过时的消息将被忽略 防范重放攻击     |
+| `x-heng-signature` | `string` | `true` |                  签名                   |
 
 ## 软件环境
 
