@@ -24,8 +24,8 @@
 
 3. {query strings}
 
-    1. 将所有查询参数按照 name 的字典序排序
-    2. value 按照 RFC3986 编码
+    1. name 和 value 按照 RFC3986 编码
+    2. 将所有查询参数按照字典序排序，编码后的 name 为第一关键字，value 为第二关键字。
     3. name 和 value 之间用 '=' 连接
     4. 键值对之间用 '&' 连接
 
@@ -33,11 +33,12 @@
 
 4. {signed headers}
 
-    1. 将白名单内的所有请求头按照 name 的字典序排序
+    1. 仅白名单内的所有请求头计入签名
     2. name 转为小写
     3. value 按照 RFC3986 编码
-    4. name 和 value 之间用 '=' 连接
-    5. 键值对之间用 '&' 连接
+    4. 按照 name 的字典序排序
+    5. name 和 value 之间用 '=' 连接
+    6. 键值对之间用 '&' 连接
 
 5. {body hash}
 
@@ -62,7 +63,9 @@
 
 8. 将计算得到的 signature 与请求头中的 `x-heng-signature` 比对，如果完全一致，那么签名正确。
 
-以上字符集均为 UTF-8
+以上字符集均为 UTF-8。
+
+字符串转义以 [encodeURIComponent](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) 为准。
 
 | 请求头白名单       |
 | ------------------ |
