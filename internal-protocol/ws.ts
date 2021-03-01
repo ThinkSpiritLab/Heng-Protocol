@@ -92,7 +92,7 @@ export type ReportStatusResponse = Response<null>;
 export type UpdateJudgesArgs = {
     id: string;
     state: JudgeState;
-}[];
+};
 
 export type UpdateJudgesRequest = Request<"UpdateJudges", UpdateJudgesArgs>;
 
@@ -101,7 +101,7 @@ export type UpdateJudgesResponse = Response<null>;
 export type FinishJudgesArgs = {
     id: string;
     result: JudgeResult;
-}[];
+};
 
 export type FinishJudgesRequest = Request<"FinishJudges", FinishJudgesArgs>;
 
