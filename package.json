@@ -7,10 +7,10 @@
     },
     "scripts": {
         "build": "tsc",
-        "format": "prettier --write external-protocol/*.ts internal-protocol/*.ts",
-        "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts",
-        "lint": "eslint external-protocol internal-protocol --fix",
-        "check:lint": "eslint external-protocol internal-protocol -f codeframe",
+        "format": "prettier --write external-protocol/*.ts internal-protocol/*.ts index.ts",
+        "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts index.ts",
+        "lint": "eslint external-protocol internal-protocol index.ts --fix",
+        "check:lint": "eslint external-protocol internal-protocol index.ts -f codeframe",
         "install": "tsc"
     },
     "devDependencies": {
