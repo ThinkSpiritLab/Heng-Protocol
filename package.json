@@ -7,19 +7,19 @@
     },
     "scripts": {
         "build": "tsc",
-        "format": "prettier --write external-protocol/*.ts internal-protocol/*.ts",
-        "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts",
-        "lint": "eslint external-protocol internal-protocol --fix",
-        "check:lint": "eslint external-protocol internal-protocol -f codeframe",
-        "prepack": "tsc"
+        "format": "prettier --write external-protocol/*.ts internal-protocol/*.ts index.ts",
+        "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts index.ts",
+        "lint": "eslint external-protocol internal-protocol index.ts --fix",
+        "check:lint": "eslint external-protocol internal-protocol index.ts -f codeframe",
+        "prepack": "npm install typescript && npx tsc"
     },
     "devDependencies": {
+        "typescript": "^4.1.3",
         "@typescript-eslint/eslint-plugin": "^4.14.1",
         "@typescript-eslint/parser": "^4.14.1",
         "eslint": "^7.18.0",
         "eslint-config-prettier": "^7.2.0",
         "eslint-plugin-import": "^2.22.1",
-        "prettier": "^2.2.1",
-        "typescript": "^4.1.3"
+        "prettier": "^2.2.1"
     }
 }
