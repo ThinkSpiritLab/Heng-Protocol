@@ -11,7 +11,7 @@
         "check:format": "prettier --check external-protocol/*.ts internal-protocol/*.ts",
         "lint": "eslint external-protocol internal-protocol --fix",
         "check:lint": "eslint external-protocol internal-protocol -f codeframe",
-        "prepack": "tsc"
+        "install": "tsc"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^4.14.1",
