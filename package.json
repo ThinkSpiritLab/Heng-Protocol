@@ -13,10 +13,8 @@
         "check:lint": "eslint external-protocol internal-protocol index.ts -f codeframe",
         "prepack": "npm install typescript && npx tsc"
     },
-    "dependencies": {
-        "typescript": "^4.1.3"
-    },
     "devDependencies": {
+        "typescript": "^4.1.3",
         "@typescript-eslint/eslint-plugin": "^4.14.1",
         "@typescript-eslint/parser": "^4.14.1",
         "eslint": "^7.18.0",
