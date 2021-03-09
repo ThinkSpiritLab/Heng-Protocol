@@ -16,7 +16,6 @@ export interface ErrorResponse {
 }
 
 export type CreateJudgeRequest = {
-    id: string;
     data?: File;
     dynamicFiles?: DynamicFile[];
     judge: Judge;
@@ -30,17 +29,13 @@ export type CreateJudgeRequest = {
     };
 };
 
-export type CreateJudgeOutput = {
-    id: string;
-};
+export type CreateJudgeOutput = null;
 
 export type UpdateJudgeCallback = {
-    id: string;
     state: JudgeState;
 };
 
 export type FinishJudgeCallback = {
-    id: string;
     result: JudgeResult;
 };
 
