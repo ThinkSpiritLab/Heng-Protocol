@@ -108,11 +108,12 @@ export interface StatusReport {
 }
 
 export enum JudgeState {
-    Confirmed = "confirmed",
-    Pending = "pending",
-    Preparing = "preparing",
-    Judging = "judging",
-    Finished = "finished",
+    Confirmed = "Confirmed",
+    Pending = "Pending",
+    Preparing = "Preparing",
+    Compiling = "Compiling",
+    Running = "Running",
+    Finished = "Finished",
 }
 
 export enum JudgeResultKind {
@@ -129,13 +130,14 @@ export enum JudgeResultKind {
     CompileMemoryLimitExceeded = "CompileMemoryLimitExceed",
     CompileFileLimitExceeded = "CompileFileLimitExceed",
 
-    SystemError = "SystemError",
+    SystemRuntimeError = "SystemRuntimeError",
+
     SystemTimeLimitExceeded = "SystemTimeLimitExceed",
     SystemMemoryLimitExceeded = "SystemMemoryLimitExceed",
     SystemOutpuLimitExceeded = "SystemOutpuLimitExceeded",
-    SystemRuntimeError = "SystemRuntimeError",
     SystemCompileError = "SystemCompileError",
 
+    SystemError = "SystemError",
     Unjudged = "Unjudged",
 }
 
