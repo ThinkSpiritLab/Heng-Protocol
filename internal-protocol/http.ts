@@ -3,6 +3,7 @@ export interface AcquireTokenRequest {
     coreCount?: number;
     name?: string;
     systemInfo?: string;
+    timeRatio?: number;
 }
 
 export interface AcquireTokenOutput {

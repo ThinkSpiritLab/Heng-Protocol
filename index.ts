@@ -118,6 +118,7 @@ export enum JudgeState {
 export enum JudgeResultKind {
     Accepted = "Accepted",
     WrongAnswer = "WrongAnswer",
+    PresentationError = "PresentationError",
 
     TimeLimitExceeded = "TimeLimitExceeded",
     MemoryLimitExceeded = "MemoryLimitExceeded",
